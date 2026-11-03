@@ -21,6 +21,77 @@ button{font:inherit;border:3px solid var(--line);background:var(--yellow);color:
 .overlay{position:fixed;inset:0;background:#0b1422dc;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}.modal{max-width:700px;width:100%;background:var(--cream);border:5px solid #0b1422;box-shadow:9px 9px 0 #050a10;padding:22px}.modal h2{font:15px/1.8 'Press Start 2P';color:#294b70}.modal p{font-size:24px}.modal small{font-size:19px}.modal .controls{margin-top:16px}.footer{text-align:center;color:#d5e4f2;font-size:17px;padding:15px}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{order:2}.mission-list{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom-grid{grid-template-columns:1fr}.scene{height:390px}}
 @media(max-width:520px){.shell{padding:0 9px 18px}.top{padding:12px 9px}.mission-list{grid-template-columns:1fr 1fr}.mission-tab{padding:6px;grid-template-columns:26px 1fr}.mission-tab .num{width:24px;height:25px}.scene{height:430px}.node{width:74px}.node.router-node{width:100px}.node-name{font-size:16px}.node small{font-size:13px}.answers{grid-template-columns:1fr}.brand h1{font-size:9px}.taskbox{grid-template-columns:1fr}.mission-head{padding:11px}.mission-head h2{font-size:34px}.mission-head p{font-size:21px}.phase{font-size:18px}}
+
+/* AJUSTE DE TELA INTEIRA PARA COMPUTADORES */
+@media (min-width:851px){
+html,body{width:100%;height:100%;min-height:0}
+body{height:100vh;overflow:hidden}
+.top{height:58px;min-height:58px;max-width:none;padding:4px 14px;flex-wrap:nowrap;overflow:hidden}
+.brand{gap:9px}.brand-icon{font-size:26px;padding:2px 7px}.brand h1{font-size:10px}.brand small{font-size:15px}
+.stats{gap:5px;flex-wrap:nowrap}.stat{font-size:16px;padding:3px 7px;white-space:nowrap}
+.shell{height:calc(100vh - 58px);max-width:none;min-height:0;padding:0 14px 7px;overflow:hidden}
+.layout{height:100%;min-height:0;grid-template-columns:minmax(185px,20%) minmax(0,1fr);gap:9px}
+.sidebar,.maincard{height:100%;min-height:0;overflow:hidden}
+.sidebar{padding:8px;display:flex;flex-direction:column}
+.side-title{font-size:8px;margin:1px 0 7px}.mission-list{gap:5px}
+.mission-tab{padding:5px;grid-template-columns:23px minmax(0,1fr);gap:5px}
+.mission-tab .num{width:21px;height:21px;font-size:15px}
+.mission-tab strong{font-size:16px;line-height:1}.mission-tab small{font-size:12px;line-height:1}
+.side-note{margin-top:auto;padding:6px;font-size:13px;line-height:1.02}
+.maincard{padding:7px;display:flex;flex-direction:column;gap:5px;min-width:0}
+.mission-head{flex:0 0 auto;margin:0;padding:6px 9px;gap:8px;background:#d8f0d9;border:3px solid #34764b;box-shadow:3px 3px 0 #1b3d2a}
+.eyebrow{font-size:14px}.mission-head h2{font:bold 29px/1 'VT323',monospace;margin:2px 0;color:#173f2a}
+.mission-head p{font-size:17px;line-height:1;margin:2px 0}.phase{font-size:15px;padding:4px 6px}
+.taskbox{flex:0 0 auto;margin:0;padding:4px 7px;gap:5px}
+.taskbox strong,.taskbox p{font-size:15px}.taskbox p{line-height:1;margin:2px 0}
+.task-status{font-size:13px}.task-progress{height:6px;margin-top:3px}
+.scene{flex:1 1 105px;width:100%;height:auto;min-height:78px;max-height:none}
+.scene-title{font-size:13px;top:3px;left:4px;padding:1px 4px}
+.node{width:73px}.node.router-node{width:94px}
+.device{transform:scale(.78);transform-origin:top center;margin-bottom:-10px}
+.node-name{font-size:13px;margin-top:2px;padding:0 3px}.node small{font-size:11px;line-height:1}
+.bottom-grid{flex:0 0 auto;grid-template-columns:1.08fr .92fr;gap:5px;margin:0;min-height:0}
+.panel{padding:5px;min-width:0;min-height:0}.panel h3{font-size:7px;margin:0 0 3px}
+.panel p{font-size:14px;line-height:1;margin:2px 0}.subhead{font-size:12px;margin:2px 0}
+.controls{gap:3px}.controls button{font-size:13px;padding:2px 4px;border-width:2px;box-shadow:2px 2px 0 var(--shadow)}
+.send-all-wrap{margin:2px 0 3px}.send-all-btn{font-size:16px!important;padding:4px 5px!important;border-width:3px;box-shadow:3px 3px 0 #0b1422}
+.log{height:44px;padding:4px;font-size:13px;border-width:2px}.hint{font-size:13px;padding:3px 4px;margin-top:3px}
+.quiz{flex:0 0 auto;padding:5px 7px;max-height:138px;overflow:auto}
+.quiz .q-label{font-size:12px}.quiz h3{font-size:8px;line-height:1.15;margin:2px 0 4px}
+.answers{gap:3px}.answers button{font-size:13px;padding:3px 5px;border-width:2px;box-shadow:2px 2px 0 #aebfc0}
+.quiz-feedback{margin-top:3px;padding:3px;font-size:13px}.quiz-actions{margin-top:3px;font-size:12px}
+.quiz-actions button{font-size:13px;padding:3px 5px}.footer{display:none}
+}
+/* Notebooks e monitores baixos */
+@media (min-width:851px) and (max-height:680px){
+.top{height:51px;min-height:51px}.shell{height:calc(100vh - 51px)}
+.layout{grid-template-columns:minmax(175px,19%) minmax(0,1fr);gap:7px}
+.sidebar{padding:6px}.mission-tab{padding:3px;grid-template-columns:20px minmax(0,1fr)}
+.mission-tab .num{width:18px;height:18px}.mission-tab strong{font-size:14px}.mission-tab small{font-size:11px}
+.side-note{font-size:11px;padding:4px}.maincard{padding:5px;gap:3px}
+.mission-head{padding:4px 6px}.mission-head h2{font-size:25px}.mission-head p{font-size:14px}
+.taskbox{padding:3px 5px}.scene{flex-basis:63px;min-height:55px}
+.panel{padding:4px}.panel p{font-size:12px}.send-all-btn{font-size:14px!important;padding:3px!important}
+.controls button{font-size:11px;padding:2px 3px}.log{height:32px;font-size:11px}
+.quiz{max-height:110px;padding:3px 5px}.answers button{font-size:11px;padding:2px 3px}
+}
+/* Tablets e celulares: rolagem natural para manter a legibilidade */
+@media (max-width:850px){
+html,body{height:auto;min-height:100%}body{height:auto;min-height:100vh;overflow:auto}
+.top{height:auto;min-height:0;overflow:visible;flex-wrap:wrap}
+.shell{height:auto;min-height:0;padding:0 12px 16px;overflow:visible}
+.layout{height:auto;grid-template-columns:1fr}
+.sidebar,.maincard{height:auto;overflow:visible}.sidebar{display:block}.maincard{display:block}
+.mission-head,.taskbox,.scene,.bottom-grid,.quiz{margin-bottom:8px}
+.scene{height:300px;min-height:240px;flex:none}
+.node{width:90px}.node.router-node{width:110px}.device{transform:none;margin-bottom:0}
+.node-name{font-size:17px}.node small{font-size:14px}
+.bottom-grid{grid-template-columns:1fr}.panel{padding:9px}.log{height:85px}
+.quiz{max-height:none;overflow:visible}.answers button{font-size:17px;padding:7px}
+.footer{display:block}.mission-head h2{font-size:30px}
+}
+@media(max-width:520px){.mission-head{padding:9px}.mission-head p{font-size:18px}}
+
 </style>
 </head>
 <body>
