@@ -1,158 +1,219 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Missão: Rede em Ação</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Missão: Rede em Ação — Jogo acessível</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
-:root{--navy:#17263d;--navy2:#253d5a;--cream:#f8f4df;--paper:#fffdf1;--ink:#1b2c43;--mint:#a6e7c2;--cyan:#9ce7ee;--yellow:#ffdc75;--red:#ff9b9b;--line:#25364d;--shadow:#0b1422;--muted:#617086}
-*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font-family:'VT323',monospace;font-size:23px}
-button{font:inherit;border:3px solid var(--line);background:var(--yellow);color:var(--ink);padding:9px 12px;box-shadow:4px 4px 0 var(--shadow);cursor:pointer;transition:transform .12s,filter .12s}button:hover{transform:translate(-2px,-2px);filter:brightness(1.04);box-shadow:6px 6px 0 var(--shadow)}button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:var(--mint)}.secondary{background:var(--cyan)}.danger{background:var(--red)}.darkbtn{background:var(--navy2);color:white}
-.top{max-width:1240px;margin:0 auto;padding:16px 18px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#fff}.brand{display:flex;align-items:center;gap:12px}.brand-icon{font-size:34px;background:#314c6a;border:3px solid #a9c3d8;padding:5px 10px}.brand h1{font:11px/1.8 'Press Start 2P';color:var(--yellow);margin:0}.brand small{display:block;font:19px 'VT323';color:#d6e7f4}.stats{display:flex;gap:7px;flex-wrap:wrap}.stat{background:var(--navy2);border:2px solid #7891a9;padding:5px 10px;font-size:20px}.stat b{color:var(--yellow)}
-.shell{max-width:1240px;margin:auto;padding:0 18px 24px}.layout{display:grid;grid-template-columns:255px minmax(0,1fr);gap:14px;align-items:start}.sidebar,.maincard{background:var(--cream);border:4px solid #0b1422;box-shadow:7px 7px 0 #0b1422}.sidebar{padding:13px}.side-title{font:9px/1.8 'Press Start 2P';margin:3px 0 13px;color:#345579}.mission-list{display:grid;gap:8px}.mission-tab{display:grid;grid-template-columns:32px 1fr;gap:8px;text-align:left;background:#fffdf1;padding:9px;border-width:2px;box-shadow:3px 3px 0 #bdb7a4}.mission-tab .num{display:grid;place-items:center;width:29px;height:29px;background:#dce5e8;border:2px solid var(--line);font-size:20px}.mission-tab strong{display:block;font-size:20px}.mission-tab small{display:block;color:var(--muted);font-size:16px}.mission-tab.active{background:#d8f0d9;border-color:#34764b;box-shadow:3px 3px 0 #34764b}.mission-tab.active .num{background:var(--yellow)}.mission-tab.done{background:#dcebf5}.mission-tab.locked{opacity:.58}.side-note{margin-top:13px;background:#e5e2cd;border:2px dashed #9c9270;padding:9px;font-size:18px}
-.maincard{padding:13px;min-width:0}.mission-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px;background:#d8f0d9;border:4px solid #34764b;box-shadow:5px 5px 0 #1b3d2a;padding:14px 16px;border-radius:2px}.eyebrow{font-size:20px;color:#315b40;letter-spacing:1.5px;font-weight:bold}.mission-head h2{font:bold 40px/1.08 'VT323',monospace;margin:7px 0 5px;color:#173f2a;text-shadow:2px 2px 0 #b5e3bd}.mission-head p{margin:3px 0;font-size:23px;color:#203b2b}.phase{background:#ffdc75;border:3px solid #25364d;padding:7px 11px;white-space:nowrap;font-size:21px;font-weight:bold;box-shadow:3px 3px 0 #0b1422}
-.taskbox{background:#fffdf1;border:3px solid #c7bea0;padding:10px 12px;margin-bottom:12px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}.taskbox strong{color:#72551b}.taskbox p{margin:3px 0}.task-progress{height:11px;border:2px solid #52657a;background:#d8d5c5;margin-top:7px}.task-progress span{display:block;height:100%;width:0;background:#5fae79;transition:width .25s}.task-status{font-size:18px;color:#53647a}
-.scene{position:relative;height:365px;border:4px solid #25364d;overflow:hidden;background:#a9d8c4;background-image:linear-gradient(90deg,rgba(255,255,255,.17) 2px,transparent 2px),linear-gradient(rgba(255,255,255,.17) 2px,transparent 2px);background-size:24px 24px}
-.scene:before{content:"";position:absolute;inset:0;background:linear-gradient(#a8d9d1 0 58%,#91c88f 58%);z-index:0}
-.scene-title{position:absolute;top:8px;left:9px;background:#fff9e7;border:2px solid #25364d;padding:2px 8px;z-index:5;font-size:18px}
-.node{position:absolute;z-index:3;transform:translate(-50%,-50%);width:95px;text-align:center}.node.router-node{width:116px}.device{width:60px;height:48px;margin:auto;position:relative;border:4px solid #17263d;background:#6d87a4;box-shadow:4px 4px 0 #56735d}.monitor{position:absolute;left:7px;top:5px;width:39px;height:27px;background:#9ce7de;border:3px solid #17263d}.monitor:after{content:"";position:absolute;left:12px;bottom:-9px;width:7px;height:6px;background:#17263d}.base{position:absolute;left:5px;bottom:2px;width:42px;height:5px;background:#17263d}.device.router{width:68px;height:40px;background:#e2b45d;border-bottom-width:7px}.device.router:before{content:"";position:absolute;left:10px;right:10px;top:-15px;height:13px;border-left:3px solid #17263d;border-right:3px solid #17263d}.device.router:after{content:"● ● ●";position:absolute;left:7px;top:5px;font-size:13px;letter-spacing:2px;color:#17263d}.node-name{display:inline-block;margin-top:6px;background:#fff9e7;border:2px solid #25364d;padding:0 5px;white-space:nowrap;font-size:18px}.node small{display:block;background:#fff9e7d9;font-size:15px}.node.failed .device{filter:grayscale(1);background:#8d8d8d}.node.failed .node-name{background:#ffc4c4}.cable{position:absolute;height:6px;background:#43516a;transform-origin:left center;z-index:1}.cable:after{content:"";position:absolute;top:2px;left:0;right:0;height:2px;background:#e6d18d}.packet{position:absolute;width:15px;height:15px;background:#fff36b;border:3px solid #17263d;z-index:6;box-shadow:2px 2px 0 #17263d;pointer-events:none}.packet:after{content:"";position:absolute;inset:3px;background:#f28a38}
-.bottom-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:12px;margin-top:12px}.panel{background:#fffdf1;border:3px solid #26364d;padding:11px;min-width:0}.panel h3{font:9px/1.8 'Press Start 2P';color:#345579;margin:0 0 8px}.panel p{margin:4px 0}.controls{display:flex;gap:7px;flex-wrap:wrap}.send-all-wrap{margin:7px 0 10px}.send-all-btn{width:100%;font-weight:bold;font-size:22px!important;padding:11px 12px!important;background:#ffdc75;border:4px solid #25364d;box-shadow:5px 5px 0 #0b1422}.send-all-btn:before{content:""}.controls button{font-size:19px;padding:7px 9px}.subhead{font-size:17px;color:#617086;margin:9px 0 5px}.log{height:104px;overflow:auto;background:#18283d;color:#e0f3e7;border:3px solid #0d1727;padding:8px;font-size:18px}.log p{margin:0 0 5px}.log .bad{color:#ffabab}.log .good{color:#a5f0b1}.hint{background:#e7efd9;border-left:4px solid #5d9e69;padding:7px 9px;font-size:18px;margin-top:8px}.hidden{display:none!important}
-.quiz{background:#e9f4f2;border:3px solid #3f7181;padding:13px}.quiz .q-label{font-size:17px;color:#426f7c}.quiz h3{font:10px/1.8 'Press Start 2P';color:#28566c;margin:7px 0 12px}.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}.answers button{text-align:left;background:#fffdf1;box-shadow:3px 3px 0 #aebfc0}.answers button.correct{background:#b8e8bd}.answers button.wrong{background:#ffc6c6}.quiz-feedback{margin-top:9px;padding:8px;background:#fffdf1;border:2px dashed #a3b2a8}.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
-.overlay{position:fixed;inset:0;background:#0b1422dc;z-index:20;display:flex;align-items:center;justify-content:center;padding:16px}.modal{max-width:700px;width:100%;background:var(--cream);border:5px solid #0b1422;box-shadow:9px 9px 0 #050a10;padding:22px}.modal h2{font:15px/1.8 'Press Start 2P';color:#294b70}.modal p{font-size:24px}.modal small{font-size:19px}.modal .controls{margin-top:16px}.footer{text-align:center;color:#d5e4f2;font-size:17px;padding:15px}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{order:2}.mission-list{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom-grid{grid-template-columns:1fr}.scene{height:390px}}
-@media(max-width:520px){.shell{padding:0 9px 18px}.top{padding:12px 9px}.mission-list{grid-template-columns:1fr 1fr}.mission-tab{padding:6px;grid-template-columns:26px 1fr}.mission-tab .num{width:24px;height:25px}.scene{height:430px}.node{width:74px}.node.router-node{width:100px}.node-name{font-size:16px}.node small{font-size:13px}.answers{grid-template-columns:1fr}.brand h1{font-size:9px}.taskbox{grid-template-columns:1fr}.mission-head{padding:11px}.mission-head h2{font-size:34px}.mission-head p{font-size:21px}.phase{font-size:18px}}
-
-/* AJUSTE DE TELA INTEIRA PARA COMPUTADORES */
-@media (min-width:851px){
-html,body{width:100%;height:100%;min-height:0}
-body{height:100vh;overflow:hidden}
-.top{height:58px;min-height:58px;max-width:none;padding:4px 14px;flex-wrap:nowrap;overflow:hidden}
-.brand{gap:9px}.brand-icon{font-size:26px;padding:2px 7px}.brand h1{font-size:10px}.brand small{font-size:15px}
-.stats{gap:5px;flex-wrap:nowrap}.stat{font-size:16px;padding:3px 7px;white-space:nowrap}
-.shell{height:calc(100vh - 58px);max-width:none;min-height:0;padding:0 14px 7px;overflow:hidden}
-.layout{height:100%;min-height:0;grid-template-columns:minmax(185px,20%) minmax(0,1fr);gap:9px}
-.sidebar,.maincard{height:100%;min-height:0;overflow:hidden}
-.sidebar{padding:8px;display:flex;flex-direction:column}
-.side-title{font-size:8px;margin:1px 0 7px}.mission-list{gap:5px}
-.mission-tab{padding:5px;grid-template-columns:23px minmax(0,1fr);gap:5px}
-.mission-tab .num{width:21px;height:21px;font-size:15px}
-.mission-tab strong{font-size:16px;line-height:1}.mission-tab small{font-size:12px;line-height:1}
-.side-note{margin-top:auto;padding:6px;font-size:13px;line-height:1.02}
-.maincard{padding:7px;display:flex;flex-direction:column;gap:5px;min-width:0}
-.mission-head{flex:0 0 auto;margin:0;padding:6px 9px;gap:8px;background:#d8f0d9;border:3px solid #34764b;box-shadow:3px 3px 0 #1b3d2a}
-.eyebrow{font-size:14px}.mission-head h2{font:bold 29px/1 'VT323',monospace;margin:2px 0;color:#173f2a}
-.mission-head p{font-size:17px;line-height:1;margin:2px 0}.phase{font-size:15px;padding:4px 6px}
-.taskbox{flex:0 0 auto;margin:0;padding:4px 7px;gap:5px}
-.taskbox strong,.taskbox p{font-size:15px}.taskbox p{line-height:1;margin:2px 0}
-.task-status{font-size:13px}.task-progress{height:6px;margin-top:3px}
-.scene{flex:1 1 105px;width:100%;height:auto;min-height:78px;max-height:none}
-.scene-title{font-size:13px;top:3px;left:4px;padding:1px 4px}
-.node{width:73px}.node.router-node{width:94px}
-.device{transform:scale(.78);transform-origin:top center;margin-bottom:-10px}
-.node-name{font-size:13px;margin-top:2px;padding:0 3px}.node small{font-size:11px;line-height:1}
-.bottom-grid{flex:0 0 auto;grid-template-columns:1.08fr .92fr;gap:5px;margin:0;min-height:0}
-.panel{padding:5px;min-width:0;min-height:0}.panel h3{font-size:7px;margin:0 0 3px}
-.panel p{font-size:14px;line-height:1;margin:2px 0}.subhead{font-size:12px;margin:2px 0}
-.controls{gap:3px}.controls button{font-size:13px;padding:2px 4px;border-width:2px;box-shadow:2px 2px 0 var(--shadow)}
-.send-all-wrap{margin:2px 0 3px}.send-all-btn{font-size:16px!important;padding:4px 5px!important;border-width:3px;box-shadow:3px 3px 0 #0b1422}
-.log{height:44px;padding:4px;font-size:13px;border-width:2px}.hint{font-size:13px;padding:3px 4px;margin-top:3px}
-.quiz{flex:0 0 auto;padding:5px 7px;max-height:138px;overflow:auto}
-.quiz .q-label{font-size:12px}.quiz h3{font-size:8px;line-height:1.15;margin:2px 0 4px}
-.answers{gap:3px}.answers button{font-size:13px;padding:3px 5px;border-width:2px;box-shadow:2px 2px 0 #aebfc0}
-.quiz-feedback{margin-top:3px;padding:3px;font-size:13px}.quiz-actions{margin-top:3px;font-size:12px}
-.quiz-actions button{font-size:13px;padding:3px 5px}.footer{display:none}
+:root{
+  --base-font:20px;
+  --navy:#17263d;--navy2:#253d5a;--cream:#f8f4df;--paper:#fffdf1;--ink:#1b2c43;
+  --mint:#a6e7c2;--cyan:#9ce7ee;--yellow:#ffdc75;--red:#ffb2b2;--line:#25364d;
+  --shadow:#0b1422;--muted:#52647a;--good:#bdebc7;--bad:#ffd0d0;
+  --focus:#ff9f1c;
 }
-/* Notebooks e monitores baixos */
-@media (min-width:851px) and (max-height:680px){
-.top{height:51px;min-height:51px}.shell{height:calc(100vh - 51px)}
-.layout{grid-template-columns:minmax(175px,19%) minmax(0,1fr);gap:7px}
-.sidebar{padding:6px}.mission-tab{padding:3px;grid-template-columns:20px minmax(0,1fr)}
-.mission-tab .num{width:18px;height:18px}.mission-tab strong{font-size:14px}.mission-tab small{font-size:11px}
-.side-note{font-size:11px;padding:4px}.maincard{padding:5px;gap:3px}
-.mission-head{padding:4px 6px}.mission-head h2{font-size:25px}.mission-head p{font-size:14px}
-.taskbox{padding:3px 5px}.scene{flex-basis:63px;min-height:55px}
-.panel{padding:4px}.panel p{font-size:12px}.send-all-btn{font-size:14px!important;padding:3px!important}
-.controls button{font-size:11px;padding:2px 3px}.log{height:32px;font-size:11px}
-.quiz{max-height:110px;padding:3px 5px}.answers button{font-size:11px;padding:2px 3px}
-}
-/* Tablets e celulares: rolagem natural para manter a legibilidade */
-@media (max-width:850px){
-html,body{height:auto;min-height:100%}body{height:auto;min-height:100vh;overflow:auto}
-.top{height:auto;min-height:0;overflow:visible;flex-wrap:wrap}
-.shell{height:auto;min-height:0;padding:0 12px 16px;overflow:visible}
-.layout{height:auto;grid-template-columns:1fr}
-.sidebar,.maincard{height:auto;overflow:visible}.sidebar{display:block}.maincard{display:block}
-.mission-head,.taskbox,.scene,.bottom-grid,.quiz{margin-bottom:8px}
-.scene{height:300px;min-height:240px;flex:none}
-.node{width:90px}.node.router-node{width:110px}.device{transform:none;margin-bottom:0}
-.node-name{font-size:17px}.node small{font-size:14px}
-.bottom-grid{grid-template-columns:1fr}.panel{padding:9px}.log{height:85px}
-.quiz{max-height:none;overflow:visible}.answers button{font-size:17px;padding:7px}
-.footer{display:block}.mission-head h2{font-size:30px}
-}
-@media(max-width:520px){.mission-head{padding:9px}.mission-head p{font-size:18px}}
-
+*{box-sizing:border-box}
+html{font-size:var(--base-font);scroll-behavior:smooth}
+body{margin:0;background:var(--navy);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:1rem;line-height:1.45}
+button,select{font:inherit}
+button{min-height:48px;min-width:48px;border:3px solid var(--line);border-radius:5px;background:var(--yellow);color:var(--ink);padding:.55rem .8rem;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);transition:transform .12s,filter .12s}
+button:hover:not(:disabled){filter:brightness(1.05);transform:translateY(-1px)}
+button:active:not(:disabled){transform:translateY(1px);box-shadow:1px 1px 0 var(--shadow)}
+button:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,[tabindex="0"]:focus-visible{outline:4px solid var(--focus);outline-offset:3px}
+.primary{background:var(--mint)}.secondary{background:var(--cyan)}.danger{background:var(--red)}.darkbtn{background:var(--navy2);color:#fff}.quiet{background:#e5e8ee}
+.hidden{display:none!important}
+.skip-link{position:absolute;left:10px;top:-80px;background:#fff;color:#111;padding:12px;z-index:1000}.skip-link:focus{top:10px}
+.topbar{max-width:1600px;margin:auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;color:#fff}
+.brand{display:flex;align-items:center;gap:12px}.brand-icon{font-size:1.5rem;background:#314c6a;border:3px solid #a9c3d8;padding:5px 10px}.brand h1{font-size:1.05rem;line-height:1.2;margin:0;color:var(--yellow);letter-spacing:.02em}.brand small{display:block;font-size:.8rem;color:#d6e7f4;margin-top:4px}
+.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{background:var(--navy2);border:2px solid #7891a9;border-radius:5px;padding:7px 11px;font-size:.9rem;white-space:nowrap}.stat b{color:var(--yellow)}
+.settings-open{background:#fff;color:#17263d}
+.shell{max-width:1600px;margin:0 auto;padding:0 18px 24px}.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:16px;align-items:start}
+.sidebar,.maincard{background:var(--cream);border:4px solid #0b1422;box-shadow:6px 6px 0 #0b1422;border-radius:5px}
+.sidebar{padding:14px;position:sticky;top:10px}.side-title{font-size:.9rem;font-weight:800;letter-spacing:.04em;margin:0 0 12px;color:#294b70}.mission-list{display:grid;gap:9px}.mission-item{display:grid;grid-template-columns:38px minmax(0,1fr);gap:9px;align-items:center;text-align:left;background:#fffdf1;padding:9px;border:2px solid #52647a;border-radius:4px;box-shadow:2px 2px 0 #bdb7a4}.mission-item .num{display:grid;place-items:center;width:34px;height:34px;background:#dce5e8;border:2px solid var(--line);font-weight:800;border-radius:3px}.mission-item strong{display:block;font-size:.88rem;line-height:1.2}.mission-item small{display:block;color:#34445a;font-size:.72rem;line-height:1.2;margin-top:3px}.mission-item.active{background:#d8f0d9;border:3px solid #34764b;box-shadow:3px 3px 0 #34764b}.mission-item.active .num{background:var(--yellow)}.mission-item.done{background:#dcebf5}.side-note{margin-top:14px;background:#e5e2cd;border:2px dashed #827956;padding:10px;font-size:.78rem;border-radius:4px;color:#263447}.side-note strong{display:block;margin-bottom:4px}
+.maincard{padding:14px;min-width:0}
+.mission-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:12px;background:#d8f0d9;border:4px solid #34764b;box-shadow:4px 4px 0 #1b3d2a;padding:13px 16px;border-radius:4px}.eyebrow{font-size:.85rem;color:#214f32;letter-spacing:.04em;font-weight:800}.mission-head h2{font-size:1.9rem;line-height:1.08;margin:4px 0;color:#173f2a}.mission-head p{margin:3px 0;font-size:1rem;color:#203b2b}.phase{background:#ffdc75;border:3px solid #25364d;padding:7px 10px;border-radius:4px;white-space:nowrap;font-size:.85rem;font-weight:800;color:#17263d}
+.taskbox{background:#fffdf1;border:3px solid #c7bea0;padding:10px 12px;margin-bottom:12px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border-radius:4px}.taskbox strong{color:#654b14;font-size:.92rem}.taskbox p{margin:3px 0;font-size:.92rem}.task-progress{height:12px;border:2px solid #52657a;background:#d8d5c5;margin-top:7px;border-radius:20px;overflow:hidden}.task-progress span{display:block;height:100%;width:0;background:#34864d;transition:width .25s}.task-status{font-size:.82rem;color:#34445a;font-weight:700;max-width:240px}
+.scene{position:relative;height:clamp(300px,38vh,430px);min-height:280px;border:4px solid #25364d;overflow:hidden;background-color:#a9d8c4;background-image:linear-gradient(90deg,rgba(255,255,255,.17) 2px,transparent 2px),linear-gradient(rgba(255,255,255,.17) 2px,transparent 2px);background-size:28px 28px;border-radius:4px}.scene:before{content:"";position:absolute;inset:0;background:linear-gradient(#a8d9d1 0 58%,#91c88f 58%);z-index:0}.scene-title{position:absolute;top:8px;left:9px;background:#fff9e7;border:2px solid #25364d;padding:5px 9px;z-index:5;font-size:.82rem;font-weight:800;border-radius:3px;color:#17263d}
+.node{position:absolute;z-index:3;transform:translate(-50%,-50%);width:110px;text-align:center}.node.router-node{width:138px}.device{width:70px;height:56px;margin:auto;position:relative;border:4px solid #17263d;background:#6d87a4;box-shadow:4px 4px 0 #56735d;border-radius:3px}.monitor{position:absolute;left:8px;top:6px;width:46px;height:31px;background:#9ce7de;border:3px solid #17263d}.monitor:after{content:"";position:absolute;left:14px;bottom:-10px;width:8px;height:7px;background:#17263d}.base{position:absolute;left:6px;bottom:2px;width:50px;height:6px;background:#17263d}.device.router{width:76px;height:48px;background:#e2b45d;border-bottom-width:7px}.device.router:before{content:"";position:absolute;left:11px;right:11px;top:-17px;height:15px;border-left:3px solid #17263d;border-right:3px solid #17263d}.device.router:after{content:"● ● ●";position:absolute;left:8px;top:7px;font-size:14px;letter-spacing:2px;color:#17263d}.node-name{display:inline-block;margin-top:7px;background:#fff9e7;border:2px solid #25364d;padding:3px 7px;white-space:nowrap;font-size:.85rem;font-weight:800;border-radius:3px;color:#17263d}.node small{display:block;background:#fff9e7f2;font-size:.7rem;font-weight:700;padding:2px;color:#17263d;border-radius:2px}.node.failed .device{filter:grayscale(1);background:#8d8d8d}.node.failed .node-name{background:#ffc4c4}.cable{position:absolute;height:6px;background:#43516a;transform-origin:left center;z-index:1}.cable:after{content:"";position:absolute;top:2px;left:0;right:0;height:2px;background:#e6d18d}.packet{position:absolute;width:17px;height:17px;background:#fff36b;border:3px solid #17263d;z-index:6;box-shadow:2px 2px 0 #17263d;pointer-events:none;border-radius:2px}.packet:after{content:"";position:absolute;inset:3px;background:#f28a38}
+.bottom-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);gap:14px;margin-top:14px;align-items:stretch}.panel{background:#fffdf1;border:3px solid #26364d;padding:13px;min-width:0;border-radius:4px}.panel h3{font-size:1.15rem;color:#294b70;margin:0 0 10px;line-height:1.2}.panel p{margin:5px 0;font-size:.92rem}.controls{display:flex;gap:9px;flex-wrap:wrap}.send-all-wrap{margin:7px 0 10px}.send-all-btn{width:100%;font-weight:800;font-size:1.12rem!important;padding:14px 12px!important;background:#ffdc75;border:4px solid #25364d;box-shadow:4px 4px 0 #0b1422}.controls button{font-size:.9rem;padding:9px 12px}.subhead{font-size:.82rem;color:#344b66;margin:12px 0 7px;font-weight:800}.send-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.send-grid button{padding:8px 5px}.group-label{font-size:.78rem;font-weight:800;color:#4b5e75;margin:12px 0 6px}.pc-choice{margin-top:9px;padding:10px;background:#e7eff4;border:2px solid #8ba4b7;border-radius:4px}.pc-choice p{margin:0 0 7px;font-weight:700}.pc-choice .controls{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}.pc-choice button{padding:7px 4px;font-size:.82rem}
+.diary-panel{display:flex;flex-direction:column;min-height:300px}.diary-header{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.diary-header h3{margin-bottom:8px}.clear-log{min-height:44px;font-size:.75rem;padding:6px 10px;background:#e4e8ed}.log{flex:1;min-height:170px;max-height:280px;overflow:auto;background:#18283d;color:#f3f7fb;border:3px solid #0d1727;padding:10px;font-size:.9rem;border-radius:4px}.log p{margin:0 0 8px;padding-bottom:6px;border-bottom:1px solid #41536a}.log .bad{color:#ffbcbc}.log .good{color:#b8f1c4}.log .info{color:#c7e9ff}.hint{background:#e7efd9;border-left:5px solid #4c8959;padding:9px 11px;font-size:.86rem;margin-top:10px;color:#243b2a}.reflection{background:#e8edf3;border-left:5px solid #55728f;padding:9px 11px;margin-top:10px;font-size:.85rem;color:#203248}
+.quiz{background:#e9f4f2;border:3px solid #3f7181;padding:14px;margin-top:14px;border-radius:4px}.quiz .q-label{font-size:.82rem;color:#28566c;font-weight:800}.quiz h3{font-size:1.1rem;color:#193f50;margin:7px 0 12px;line-height:1.3}.answers{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answers button{text-align:left;background:#fffdf1;box-shadow:2px 2px 0 #aebfc0;min-height:58px}.answers button.correct{background:#b8e8bd}.answers button.wrong{background:#ffc6c6}.quiz-feedback{margin-top:10px;padding:10px;background:#fffdf1;border:2px dashed #829b90;border-radius:4px;font-size:.9rem}.quiz-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;font-size:.85rem}
+.overlay{position:fixed;inset:0;background:#0b1422dc;z-index:20;display:flex;align-items:center;justify-content:center;padding:18px;overflow:auto}.modal{max-width:760px;width:100%;background:var(--cream);border:5px solid #0b1422;box-shadow:8px 8px 0 #050a10;padding:22px;border-radius:5px;max-height:94vh;overflow:auto}.modal h2{font-size:1.45rem;color:#294b70;margin:0 0 10px}.modal p{font-size:1rem;line-height:1.45}.modal small{font-size:.9rem}.modal .controls{margin-top:16px}.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.setting{background:#fffdf1;padding:12px;border:2px solid #a5adba;border-radius:4px}.setting strong{display:block;margin-bottom:7px}.setting .controls{align-items:center}.setting button{font-size:.82rem}.setting-value{display:inline-block;min-width:70px;text-align:center;font-weight:800}.footer{text-align:center;color:#d5e4f2;font-size:.78rem;padding:18px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+body.light-theme{background:#e9edf3}body.light-theme .topbar{color:#17263d}body.light-theme .brand small{color:#30445c}body.light-theme .stat{background:#fff;border-color:#52647a;color:#17263d}body.light-theme .stat b{color:#7a4d00}
+body.high-contrast{--cream:#fff;--paper:#fff;--ink:#000;--muted:#111}body.high-contrast .sidebar,body.high-contrast .maincard,body.high-contrast .panel,body.high-contrast .taskbox{background:#fff;color:#000;border-color:#000}body.high-contrast .mission-head{background:#fff500;border-color:#000}body.high-contrast .mission-head h2,body.high-contrast .mission-head p,body.high-contrast .eyebrow{color:#000}body.high-contrast .mission-item{background:#fff;border:3px solid #000;color:#000}body.high-contrast .mission-item.active{background:#fff500}body.high-contrast button{border-color:#000;color:#000}body.high-contrast .log{background:#000;color:#fff;border:3px solid #000}body.high-contrast .log .good{color:#9cff9c}body.high-contrast .log .bad{color:#ff9c9c}
+body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+@media(max-width:1050px){.layout{grid-template-columns:220px minmax(0,1fr)}.bottom-grid{grid-template-columns:1fr}.diary-panel{min-height:260px}.send-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:800px){.topbar{align-items:flex-start}.layout{grid-template-columns:1fr}.sidebar{position:static}.mission-list{grid-template-columns:repeat(2,minmax(0,1fr))}.bottom-grid{grid-template-columns:1fr}.diary-panel{min-height:300px}.scene{height:360px}.send-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){html{font-size:19px}.shell{padding:0 9px 18px}.topbar{padding:10px;gap:10px}.brand h1{font-size:.95rem}.top-actions{width:100%;justify-content:space-between}.stats{gap:5px}.stat{font-size:.76rem;padding:5px 7px}.mission-list{grid-template-columns:1fr}.mission-head{padding:10px}.mission-head h2{font-size:1.55rem}.mission-head p{font-size:.92rem}.phase{font-size:.75rem}.taskbox{grid-template-columns:1fr}.task-status{max-width:none}.scene{height:340px;min-height:300px}.node{width:86px}.node.router-node{width:110px}.device{transform:scale(.88);transform-origin:top center;margin-bottom:-6px}.node-name{font-size:.75rem}.node small{font-size:.62rem}.send-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pc-choice .controls{grid-template-columns:repeat(2,minmax(0,1fr))}.answers{grid-template-columns:1fr}.settings-grid{grid-template-columns:1fr}.diary-panel{min-height:260px}.log{max-height:250px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<header class="top">
- <div class="brand"><div class="brand-icon">▣</div><div><h1>MISSÃO: REDE EM AÇÃO</h1><small>Laboratório de investigação digital</small></div></div>
- <div class="stats"><div class="stat">⭐ Pontos <b id="score">0</b></div><div class="stat">📍 Missão <b id="missionStat">1/5</b></div><div class="stat">🏅 Medalhas <b id="medals">0</b></div></div>
-</header>
-<div class="shell"><div class="layout">
- <aside class="sidebar">
-  <div class="side-title">MAPA DE MISSÕES</div>
-  <div class="mission-list" id="missionList"></div>
-  <div class="side-note"><b>🧭 Como jogar</b><br>1. Leia a missão atual.<br>2. Teste a rede usando os controles.<br>3. Responda ao quiz que aparece entre as missões.<br>4. Use as descobertas para avançar.</div>
- </aside>
- <main class="maincard">
-  <div class="mission-head"><div><div class="eyebrow" id="missionEyebrow">MISSÃO 01 • OBSERVAR</div><h2 id="missionTitle">Primeiro contato</h2><p id="missionDesc">Investigue como os dados chegam aos computadores.</p></div><div class="phase" id="phaseTag">EM ANDAMENTO</div></div>
-  <div class="taskbox"><div><strong>🎯 O QUE VOCÊ PRECISA FAZER</strong><p id="objective">Envie dados para os cinco computadores.</p><div class="task-progress"><span id="progress"></span></div></div><div class="task-status" id="taskStatus">0 de 5 computadores receberam dados</div></div>
-  <div class="scene" id="scene"><div class="scene-title">LABORATÓRIO • REDE LOCAL</div><div id="network"></div></div>
-  <div class="bottom-grid">
-   <section class="panel" id="controlsPanel"><h3>🕹️ CONTROLES DO TÉCNICO</h3><div class="subhead">TRANSMITIR PACOTE DE DADOS</div><div class="send-all-wrap"><button class="send-all-btn" id="sendAllBtn" onclick="sendAll()">📡 ENVIAR PACOTES PARA TODOS OS COMPUTADORES</button></div><div class="subhead">Ou envie para um computador específico:</div><div class="controls" id="sendButtons"></div><div class="subhead">TESTAR FALHAS E SOLUÇÕES</div><div class="controls"><button class="danger" onclick="toggleRouter()">⚠ Falha no roteador</button><button class="danger" onclick="choosePcFailure()">⚠ Falha em PC</button><button class="primary" onclick="repairAll()">🔧 Reparar rede</button></div><div class="hint" id="hint">Dica: envie um pacote e acompanhe o caminho percorrido.</div></section>
-   <section class="panel"><h3>📟 DIÁRIO DA REDE</h3><div class="log" id="log" aria-live="polite"><p>› Sistema pronto. Aguardando sua primeira ação...</p></div><div class="subhead">LEMBRE-SE</div><p id="reflection">O que você observa sobre os cabos e os caminhos dos dados?</p></section>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+<header class="topbar">
+  <div class="brand"><div class="brand-icon" aria-hidden="true">▣</div><div><h1>MISSÃO: REDE EM AÇÃO</h1><small>Laboratório de investigação digital</small></div></div>
+  <div class="top-actions">
+    <div class="stats" aria-label="Progresso do jogador">
+      <div class="stat">⭐ Pontos: <b id="score">0</b></div>
+      <div class="stat">📍 Missão: <b id="missionStat">1/5</b></div>
+      <div class="stat">🏅 Medalhas: <b id="medals">0</b></div>
+    </div>
+    <button class="settings-open" type="button" onclick="openSettings()" aria-haspopup="dialog">⚙ Acessibilidade</button>
   </div>
-  <section class="quiz hidden" id="quizPanel"><div class="q-label" id="quizLabel">PAUSA PARA PENSAR • QUIZ 1</div><h3 id="quizQuestion"></h3><div class="answers" id="quizAnswers"></div><div id="quizFeedback"></div><div class="quiz-actions"><span id="quizProgress">Responda para liberar a próxima missão.</span><button class="primary hidden" id="continueBtn" onclick="continueAfterQuiz()">Continuar missão ➜</button></div></section>
- </main>
-</div><div class="footer">Aprenda testando • Observe as consequências • Descubra como a rede funciona</div></div>
-<div class="overlay" id="intro"><div class="modal"><h2>MISSÃO: REDE EM AÇÃO</h2><p>Algo importante conecta os cinco computadores deste laboratório. Você é o técnico responsável por investigar a rede.</p><p>Envie dados, provoque falhas e descubra o que continua funcionando. Entre uma tarefa e outra, responda a quizzes rápidos para desbloquear a próxima missão.</p><small>🎮 Objetivo: descobrir a organização da rede, suas vantagens, seus limites e como resolver problemas — sem receber a resposta pronta!</small><div class="controls"><button class="primary" onclick="startGame()">ENTRAR NO LABORATÓRIO ▶</button></div></div></div>
-<div class="overlay hidden" id="finish"><div class="modal"><h2>🏆 MISSÃO CONCLUÍDA!</h2><p id="finishSummary"></p><p>Você investigou o fluxo de dados, comparou falhas e avaliou vantagens, aplicações e soluções.</p><div class="controls"><button class="primary" onclick="location.reload()">JOGAR NOVAMENTE ↻</button></div></div></div>
+</header>
+<div class="shell" id="conteudo">
+  <div class="layout">
+    <aside class="sidebar" aria-label="Mapa de missões">
+      <h2 class="side-title">🧭 MAPA DE MISSÕES</h2>
+      <div class="mission-list" id="missionList"></div>
+      <div class="side-note"><strong>COMO JOGAR</strong>1. Leia a missão atual.<br>2. Use os controles grandes.<br>3. Observe o diário da rede.<br>4. Responda ao quiz no seu tempo.<br><br>Você pode pausar e ajustar a acessibilidade quando precisar.</div>
+    </aside>
+    <main class="maincard">
+      <section class="mission-head" aria-labelledby="missionTitle">
+        <div><div class="eyebrow" id="missionEyebrow">MISSÃO 01 • OBSERVAR</div><h2 id="missionTitle" tabindex="-1">Mapeie a comunicação</h2><p id="missionDesc">Descubra como cada computador recebe os dados.</p></div>
+        <div class="phase" id="phaseTag" aria-live="polite">EM ANDAMENTO</div>
+      </section>
+      <section class="taskbox" aria-label="Objetivo da missão">
+        <div><strong>🎯 O QUE VOCÊ PRECISA FAZER</strong><p id="objective">Envie pelo menos um pacote a cada um dos cinco computadores.</p><div class="task-progress" role="progressbar" aria-label="Computadores que receberam dados" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="progressBar"><span id="progress"></span></div></div>
+        <div class="task-status" id="taskStatus" aria-live="polite">0 de 5 computadores receberam dados</div>
+      </section>
+      <section class="scene" id="scene" aria-label="Mapa visual da rede. Um roteador central ligado a cinco computadores">
+        <div class="scene-title">LABORATÓRIO • REDE LOCAL</div><div id="network"></div>
+      </section>
+      <div class="bottom-grid">
+        <section class="panel" id="controlsPanel" aria-labelledby="controlsTitle">
+          <h3 id="controlsTitle">🕹️ CONTROLE DO TÉCNICO</h3>
+          <div class="group-label">A. TRANSMISSÃO DE DADOS</div>
+          <div class="send-all-wrap"><button class="send-all-btn" id="sendAllBtn" type="button" onclick="sendAll()">📡 ENVIAR PACOTES PARA TODOS OS COMPUTADORES</button></div>
+          <div class="subhead">Ou escolha um computador específico:</div>
+          <div class="send-grid" id="sendButtons"></div>
+          <div class="group-label">B. SIMULAR FALHAS</div>
+          <div class="controls"><button class="danger" type="button" onclick="toggleRouter()">⚠ Simular falha no roteador</button><button class="danger" type="button" onclick="togglePcPicker()">⚠ Simular falha em um PC</button></div>
+          <div class="pc-choice hidden" id="pcChoice"><p>Escolha o computador que deseja testar:</p><div class="controls" id="pcChoiceButtons"></div></div>
+          <div class="group-label">C. RECUPERAÇÃO E DESAFIO</div>
+          <div class="controls"><button class="primary" type="button" onclick="repairAll()">🔧 Reparar a rede</button><button class="secondary hidden" id="deduceBtn" type="button" onclick="confirmDeduction()">✓ Concluir investigação</button></div>
+          <p class="hint" id="hint">Dica: envie um pacote e acompanhe o caminho percorrido.</p>
+        </section>
+        <section class="panel diary-panel" aria-labelledby="diaryTitle">
+          <div class="diary-header"><h3 id="diaryTitle">📟 DIÁRIO DA REDE</h3><button class="clear-log" type="button" onclick="clearLog()">Limpar histórico</button></div>
+          <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions text"><p class="info">› Sistema pronto. Aguardando sua primeira ação...</p></div>
+          <div class="reflection" id="reflection"><strong>LEMBRE-SE:</strong> O que você observa sobre os cabos e os caminhos dos dados?</div>
+        </section>
+      </div>
+      <section class="quiz hidden" id="quizPanel" aria-labelledby="quizQuestion">
+        <div class="q-label" id="quizLabel">PAUSA PARA PENSAR • QUIZ 1</div>
+        <h3 id="quizQuestion" tabindex="-1"></h3>
+        <div class="answers" id="quizAnswers"></div>
+        <div id="quizFeedback" aria-live="polite"></div>
+        <div class="quiz-actions"><span id="quizProgress">Escolha uma resposta. Não há limite de tempo.</span><button class="primary hidden" id="continueBtn" type="button" onclick="continueAfterQuiz()">Continuar missão ➜</button></div>
+      </section>
+    </main>
+  </div>
+  <div class="footer">Aprenda testando • Observe as consequências • Descubra como a rede funciona</div>
+</div>
+
+<div class="overlay" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="modal">
+    <h2 id="introTitle">MISSÃO: REDE EM AÇÃO</h2>
+    <p>Você é o técnico responsável por investigar a rede deste laboratório. São cinco computadores conectados a um equipamento central.</p>
+    <p>Envie dados, provoque falhas e descubra o que continua funcionando. Entre uma tarefa e outra, responda a quizzes rápidos para desbloquear a próxima missão.</p>
+    <p><strong>Jogue no seu ritmo:</strong> não existe limite de tempo. Você pode aumentar as letras, ativar alto contraste, reduzir animações e usar o teclado para navegar.</p>
+    <div class="modal-actions"><button class="primary" type="button" onclick="startGame()">ENTRAR NO LABORATÓRIO ▶</button><button class="secondary" type="button" onclick="openSettings()">⚙ Ajustar acessibilidade</button></div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="settings" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal">
+    <h2 id="settingsTitle">⚙ CONFIGURAÇÕES DE ACESSIBILIDADE</h2>
+    <p>Ajuste a apresentação e a interação para ficar confortável. As preferências são salvas neste computador.</p>
+    <div class="settings-grid">
+      <div class="setting"><strong>Tamanho da fonte</strong><div class="controls"><button type="button" onclick="changeFont(-1)" aria-label="Diminuir tamanho da fonte">A− Diminuir</button><span class="setting-value" id="fontValue">20 px</span><button type="button" onclick="changeFont(1)" aria-label="Aumentar tamanho da fonte">A+ Aumentar</button></div></div>
+      <div class="setting"><strong>Contraste e aparência</strong><div class="controls"><button type="button" id="contrastBtn" onclick="toggleContrast()">Alto contraste: desligado</button><button type="button" id="themeBtn" onclick="toggleTheme()">Tema claro: desligado</button></div></div>
+      <div class="setting"><strong>Movimento</strong><div class="controls"><button type="button" id="motionBtn" onclick="toggleMotion()">Reduzir animações: desligado</button></div></div>
+      <div class="setting"><strong>Sons de retorno</strong><div class="controls"><button type="button" id="soundBtn" onclick="toggleSound()">Sons: desligados</button></div><small>Os avisos também aparecem por escrito no diário.</small></div>
+    </div>
+    <div class="modal-actions"><button class="primary" type="button" onclick="closeSettings()">Concluir</button><button class="quiet" type="button" onclick="resetSettings()">Restaurar padrões</button></div>
+  </div>
+</div>
+
+<div class="overlay hidden" id="finish" role="dialog" aria-modal="true" aria-labelledby="finishTitle">
+  <div class="modal"><h2 id="finishTitle">🏆 INVESTIGAÇÃO CONCLUÍDA!</h2><p id="finishSummary"></p><p>Você investigou o fluxo de dados, comparou falhas e analisou vantagens, limitações e soluções da topologia em estrela.</p><div class="modal-actions"><button class="primary" type="button" onclick="location.reload()">JOGAR NOVAMENTE ↻</button></div></div>
+</div>
+
 <script>
-const missions=[
+'use strict';
+const missions = [
  {title:'Mapeie a comunicação',tag:'OBSERVAR',desc:'Descubra como cada computador recebe os dados.',objective:'Envie pelo menos um pacote a cada um dos cinco computadores.',hint:'Observe os cabos: cada envio parte do mesmo equipamento central.',reflection:'Os dados passam por um computador antes de chegar ao outro?',type:'sendAll'},
- {title:'Uma falha isolada',tag:'INVESTIGAR',desc:'Teste o que acontece quando um computador para.',objective:'Provoque uma falha em um PC e envie dados para dois outros computadores.',hint:'Escolha um PC para falhar. Depois, teste os demais. O que continua funcionando?',reflection:'A falha de um computador afeta todos ou só aquele ponto?',type:'pcFailure'},
- {title:'O ponto central falhou',tag:'DIAGNOSTICAR',desc:'Investigue o efeito de uma falha no equipamento central.',objective:'Desative o roteador e tente enviar um pacote.',hint:'Compare esta falha com a anterior. O impacto foi maior ou menor?',reflection:'Qual equipamento parece essencial para manter a comunicação?',type:'routerFailure'},
- {title:'Técnico em ação',tag:'RESOLVER',desc:'Escolha como recuperar a comunicação da rede.',objective:'Repare a rede e confirme que os computadores voltaram a receber dados.',hint:'Verifique o equipamento central e os cabos/conexões. Em uma rede real, também se investigam energia, portas e configuração.',reflection:'Por que localizar o equipamento com problema ajuda a resolver a falha?',type:'repair'},
- {title:'Descubra o padrão',tag:'CONCLUIR',desc:'Use as pistas para identificar a organização da rede.',objective:'Complete o desafio final e explique sua conclusão.',hint:'Pense no desenho das conexões e no que ocorreu quando cada tipo de equipamento falhou.',reflection:'Quais vantagens e limitações você explicaria a alguém que fosse montar uma rede?',type:'deduce'}
+ {title:'Uma falha isolada',tag:'INVESTIGAR',desc:'Teste o que acontece quando um computador para.',objective:'Provoque uma falha em um PC e envie dados para dois outros computadores que estejam funcionando.',hint:'Escolha um PC para falhar. Depois, envie pacotes para pelo menos outros dois computadores. Observe o que continua funcionando.',reflection:'A falha de um computador afeta todos ou só aquele ponto?',type:'pcFailure'},
+ {title:'O ponto central falhou',tag:'DIAGNOSTICAR',desc:'Investigue o efeito de uma falha no equipamento central.',objective:'Desative o roteador e tente enviar um pacote para qualquer computador.',hint:'Compare esta falha com a anterior. O impacto foi maior ou menor?',reflection:'Qual equipamento parece essencial para manter a comunicação?',type:'routerFailure'},
+ {title:'Técnico em ação',tag:'RESOLVER',desc:'Escolha como recuperar a comunicação da rede.',objective:'Repare a rede e confirme que os computadores voltaram a funcionar.',hint:'Verifique o equipamento central e os computadores. Em uma rede real, também se investigam energia, portas, cabos e configuração.',reflection:'Por que localizar o equipamento com problema ajuda a resolver a falha?',type:'repair'},
+ {title:'Descubra o padrão',tag:'CONCLUIR',desc:'Use as pistas para identificar a organização da rede.',objective:'Observe o desenho das conexões e conclua sua investigação.',hint:'Pense no desenho das conexões e no que ocorreu quando cada tipo de equipamento falhou.',reflection:'Quais vantagens e limitações você explicaria a alguém que fosse montar uma rede?',type:'deduce'}
 ];
-const quizzes=[
- {q:'No primeiro teste, o pacote saiu do mesmo equipamento e foi até cada computador. O que isso sugere?',a:['Cada computador depende de uma ligação com um ponto central.','Os computadores precisam retransmitir todos os pacotes uns aos outros.','Os dados só podem chegar ao PC 1.','A rede funciona sem equipamento central.'],c:0,why:'Observe que as ligações individuais partem de um mesmo ponto.'},
+const quizzes = [
+ {q:'No primeiro teste, o pacote saiu do mesmo equipamento e foi até cada computador. O que isso sugere?',a:['Cada computador depende de uma ligação com um ponto central.','Os computadores precisam retransmitir todos os pacotes uns aos outros.','Os dados só podem chegar ao PC 1.','A rede funciona sem equipamento central.'],c:0,why:'As ligações individuais partem de um mesmo ponto central.'},
  {q:'Um único computador apresentou falha. Os outros continuam recebendo dados. Qual é uma vantagem desse arranjo?',a:['Uma falha individual tende a ficar limitada àquele computador.','Uma falha individual sempre derruba a rede toda.','Não existe necessidade de cabos.','O roteador deixa de ser necessário.'],c:0,why:'Uma ligação individual facilita localizar e isolar problemas em um ponto.'},
- {q:'Quando o roteador falha, os cinco computadores deixam de receber novos pacotes. Qual é a principal conclusão?',a:['O roteador é o ponto central e sua falha pode interromper toda a comunicação.','O PC 5 controla os outros computadores.','Cada computador tem conexão independente com a internet, sem equipamento central.','A falha de um computador causou o problema.'],c:0,why:'O ponto central é importante para a comunicação, por isso precisa de cuidado e manutenção.'},
+ {q:'Quando o roteador falha, os cinco computadores deixam de receber novos pacotes. Qual é a principal conclusão?',a:['O roteador é o ponto central e sua falha pode interromper toda a comunicação.','O PC 5 controla os outros computadores.','Cada computador tem conexão independente, sem equipamento central.','A falha de um computador causou o problema.'],c:0,why:'O ponto central é importante para a comunicação; por isso precisa de cuidado e manutenção.'},
  {q:'Qual ação é a melhor primeira resposta quando a rede para após uma falha no roteador?',a:['Verificar energia, cabos, indicadores e estado do equipamento; reparar ou substituir se necessário.','Trocar todos os cinco computadores imediatamente.','Ignorar o roteador e continuar enviando dados.','Desconectar todos os cabos sem verificar nada.'],c:0,why:'Um diagnóstico organizado evita trocas desnecessárias e ajuda a localizar a causa.'},
- {q:'Qual descrição combina com o padrão de conexões que você observou?',a:['Todos os computadores ligados a um ponto central, como raios ao redor de um centro.','Um único cabo principal compartilhado por todos em sequência.','Cada computador ligado somente ao próximo formando um círculo.','Todos os computadores ligados diretamente a todos os outros.'],c:0,why:'Você identificou a topologia em estrela! Agora pense também em seus custos e no cuidado com o equipamento central.'}
+ {q:'Qual descrição combina com o padrão de conexões que você observou?',a:['Todos os computadores ligados a um ponto central, como raios ao redor de um centro.','Um único cabo principal compartilhado por todos em sequência.','Cada computador ligado somente ao próximo, formando um círculo.','Todos os computadores ligados diretamente a todos os outros.'],c:0,why:'Você identificou a topologia em estrela: todos os computadores se conectam a um ponto central.'}
 ];
-let current=0, score=0, medals=0, batchSending=false, routerFailed=false, pcFailed=[false,false,false,false,false], delivered=new Set(), quizDone=[false,false,false,false,false], quizAnswered=false, started=false, taskFlags={}, currentQuizOrder=[];
-const hub={x:50,y:49}, pcs=[{x:18,y:22},{x:82,y:22},{x:13,y:76},{x:87,y:76},{x:50,y:86}];
-function el(id){return document.getElementById(id)}
-function cable(x1,y1,x2,y2){let dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy),ang=Math.atan2(dy,dx)*180/Math.PI;return `<div class="cable" style="left:${x1}%;top:${y1}%;width:${len}%;transform:rotate(${ang}deg)"></div>`}
-function draw(){let out='';pcs.forEach(p=>out+=cable(hub.x,hub.y,p.x,p.y));out+=`<div class="node router-node ${routerFailed?'failed':''}" style="left:${hub.x}%;top:${hub.y}%"><div class="device router"></div><div class="node-name">ROTEADOR</div><small>${routerFailed?'SEM SINAL':'PONTO CENTRAL'}</small></div>`;pcs.forEach((p,i)=>out+=`<div class="node ${pcFailed[i]?'failed':''}" style="left:${p.x}%;top:${p.y}%"><div class="device"><div class="monitor"></div><div class="base"></div></div><div class="node-name">PC ${i+1}</div><small>${pcFailed[i]?'COM FALHA':delivered.has(i+1)?'DADO RECEBIDO':'AGUARDANDO'}</small></div>`);el('network').innerHTML=out}
-function log(msg,type=''){let p=document.createElement('p');p.className=type;p.textContent='› '+msg;el('log').prepend(p)}
-function updateStats(){el('score').textContent=score;el('medals').textContent=medals;el('missionStat').textContent=(current+1)+'/5';el('progress').style.width=(delivered.size/5*100)+'%';el('taskStatus').textContent=delivered.size+' de 5 computadores receberam dados';draw()}
-function renderMission(){let m=missions[current];el('missionEyebrow').textContent='MISSÃO '+String(current+1).padStart(2,'0')+' • '+m.tag;el('missionTitle').textContent=m.title;el('missionDesc').textContent=m.desc;el('objective').textContent=m.objective;el('hint').textContent=m.hint;el('reflection').textContent=m.reflection;el('phaseTag').textContent=quizDone[current]?'LIBERADA':'EM ANDAMENTO';el('missionList').innerHTML=missions.map((x,i)=>`<button class="mission-tab ${i===current?'active':''} ${i<current?'done':''} ${i>current?'locked':''}" ${i>current?'disabled':''} onclick="goMission(${i})"><span class="num">${i<current?'✓':i+1}</span><span><strong>${x.title}</strong><small>${i<current?'Missão concluída':i===current?'Missão atual':'🔒 Complete a etapa anterior'}</small></span></button>`).join('');el('sendButtons').innerHTML=[1,2,3,4,5].map(i=>`<button class="secondary" onclick="sendOne(${i})">Enviar → PC ${i}</button>`).join('');el('quizPanel').classList.add('hidden');el('controlsPanel').classList.remove('hidden');updateStats()}
-function startGame(){el('intro').classList.add('hidden');started=true;renderMission();log('Bem-vindo, técnico! Comece pela missão 1.','good')}
-function goMission(i){if(i>current||!started)return;current=i;renderMission()}
-function sendOne(i){if(!started)return;if(routerFailed){log('Falha: o roteador está sem funcionar. O pacote não pode seguir.','bad');return}if(pcFailed[i-1]){log('PC '+i+' não recebeu o pacote porque está com falha.','bad');return}let p=pcs[i-1],packet=document.createElement('div');packet.className='packet';packet.style.left='50%';packet.style.top='49%';el('network').appendChild(packet);let t=performance.now();function move(now){let k=Math.min((now-t)/600,1);packet.style.left=(50+(p.x-50)*k)+'%';packet.style.top=(49+(p.y-49)*k)+'%';if(k<1)requestAnimationFrame(move);else{packet.remove();delivered.add(i);if(!taskFlags['send'+i]){score+=10;taskFlags['send'+i]=true}log('Pacote chegou ao PC '+i+'.','good');updateStats();checkTask()}}requestAnimationFrame(move)}
-function sendAll(){if(!started||batchSending)return;if(routerFailed){log('Envio em grupo cancelado: o roteador está com falha. Nenhum computador recebeu os pacotes.','bad');return}batchSending=true;let btn=el('sendAllBtn');btn.disabled=true;btn.textContent='📡 ENVIANDO PACOTES...';log('Transmissão em grupo iniciada: o roteador está enviando dados aos cinco computadores.');[1,2,3,4,5].forEach((i,n)=>setTimeout(()=>{sendOne(i);if(i===5){setTimeout(()=>{batchSending=false;btn.disabled=false;btn.textContent='📡 ENVIAR PACOTES PARA TODOS OS COMPUTADORES'},850)}},n*220))}
-function toggleRouter(){routerFailed=!routerFailed;log(routerFailed?'ALERTA: o roteador falhou. A comunicação com todos os PCs foi interrompida.':'Roteador reativado. Teste novamente a transmissão.',routerFailed?'bad':'good');draw();checkTask()}
-function choosePcFailure(){let n=prompt('Qual computador deve apresentar (ou deixar de apresentar) falha? Digite 1, 2, 3, 4 ou 5:');let i=Number(n);if(i>=1&&i<=5){pcFailed[i-1]=!pcFailed[i-1];log(pcFailed[i-1]?'PC '+i+' falhou. Teste o envio para os outros computadores.':'PC '+i+' voltou a funcionar.',pcFailed[i-1]?'bad':'good');draw();checkTask()}else if(n!==null)alert('Digite um número de 1 a 5.')}
-function repairAll(){routerFailed=false;pcFailed=[false,false,false,false,false];log('Verificação concluída: roteador e computadores estão ativos.','good');draw();if(current===3){taskFlags.repaired=true;checkTask()}}
-function checkTask(){let ok=false;if(current===0)ok=delivered.size>=5;if(current===1)ok=pcFailed.some(Boolean)&&!routerFailed&&[1,2,3,4,5].some(i=>!pcFailed[i-1]&&delivered.has(i));if(current===2)ok=routerFailed;if(current===3)ok=!!taskFlags.repaired&&!routerFailed&&!pcFailed.some(Boolean);if(current===4)ok=true;if(ok&&!el('quizPanel').classList.contains('hidden'))return;if(ok){el('taskStatus').textContent='Objetivo cumprido! Quiz liberado.';el('phaseTag').textContent='OBJETIVO CUMPRIDO';showQuiz()}}
-function shuffleArray(items){let arr=[...items];for(let i=arr.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
-function showQuiz(){if(quizDone[current])return;el('quizPanel').classList.remove('hidden');el('quizLabel').textContent='PAUSA PARA PENSAR • QUIZ '+(current+1);let q=quizzes[current];el('quizQuestion').textContent=q.q;el('quizFeedback').innerHTML='';el('continueBtn').classList.add('hidden');el('quizProgress').textContent='Escolha uma resposta para liberar a próxima missão.';quizAnswered=false;currentQuizOrder=shuffleArray(q.a.map((_,originalIndex)=>originalIndex));el('quizAnswers').innerHTML=currentQuizOrder.map((originalIndex,displayIndex)=>`<button onclick="answerQuiz(${displayIndex})">${String.fromCharCode(65+displayIndex)}. ${q.a[originalIndex]}</button>`).join('');el('quizPanel').scrollIntoView({behavior:'smooth',block:'nearest'})}
-function answerQuiz(displayIndex){if(quizAnswered)return;let q=quizzes[current],buttons=[...el('quizAnswers').querySelectorAll('button')],selectedOriginalIndex=currentQuizOrder[displayIndex];if(selectedOriginalIndex===q.c){quizAnswered=true;buttons[displayIndex].classList.add('correct');buttons.forEach(b=>b.disabled=true);score+=20;medals++;quizDone[current]=true;el('quizFeedback').innerHTML='<div class="quiz-feedback">⭐ Muito bem! '+q.why+' <b>+20 pontos e uma medalha!</b></div>';el('quizProgress').textContent='Resposta correta. Você desbloqueou a próxima etapa.';el('continueBtn').classList.remove('hidden');el('phaseTag').textContent='QUIZ CONCLUÍDO';updateStats();log('Quiz '+(current+1)+' concluído. Medalha conquistada!','good');if(current===4)el('continueBtn').textContent='Ver resultado 🏆'}else{buttons[displayIndex].classList.add('wrong');el('quizFeedback').innerHTML='<div class="quiz-feedback">Ainda não! Observe o resultado do teste e tente outra alternativa.</div>';log('Resposta do quiz precisa ser revista.','bad')}}
-function continueAfterQuiz(){el('quizPanel').classList.add('hidden');if(current===4){el('finishSummary').textContent='Pontuação final: '+score+' pontos • Medalhas: '+medals+' de 5.';el('finish').classList.remove('hidden');return}current++;renderMission();log('Nova missão desbloqueada: '+missions[current].title+'.','good');if(current===1)el('taskStatus').textContent='Teste uma falha em um computador.';if(current===2)el('taskStatus').textContent='Teste a falha no roteador.';if(current===3)el('taskStatus').textContent='Repare os equipamentos.';if(current===4)el('taskStatus').textContent='Leia a pista e conclua o desafio.'}
-draw();renderMission();
+
+let current=0, score=0, medals=0, batchSending=false, routerFailed=false;
+let pcFailed=[false,false,false,false,false], delivered=new Set(), quizDone=[false,false,false,false,false];
+let quizAnswered=false, started=false, taskFlags={repaired:false}, currentQuizOrder=[];
+let mission2Targets=new Set(), routerAttempted=false, pcPickerOpen=false, settingsReturnFocus=null;
+const hub={x:50,y:49}, pcs=[{x:18,y:22},{x:82,y:22},{x:14,y:76},{x:86,y:76},{x:50,y:82}];
+const el=id=>document.getElementById(id);
+
+function defaultSettings(){return {font:20,contrast:false,light:false,reduced:window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,sound:false}}
+function loadSettings(){try{const saved=JSON.parse(localStorage.getItem('redeEmAcaoA11y')||'null');return {...defaultSettings(),...(saved||{})}}catch(e){return defaultSettings()}}
+let settings=loadSettings();
+function saveSettings(){try{localStorage.setItem('redeEmAcaoA11y',JSON.stringify(settings))}catch(e){/* O jogo continua funcionando sem armazenamento local. */}}
+function applySettings(){document.documentElement.style.setProperty('--base-font',settings.font+'px');document.body.classList.toggle('high-contrast',settings.contrast);document.body.classList.toggle('light-theme',settings.light);document.body.classList.toggle('reduce-motion',settings.reduced);el('fontValue').textContent=settings.font+' px';el('contrastBtn').textContent='Alto contraste: '+(settings.contrast?'ligado':'desligado');el('themeBtn').textContent='Tema claro: '+(settings.light?'ligado':'desligado');el('motionBtn').textContent='Reduzir animações: '+(settings.reduced?'ligado':'desligado');el('soundBtn').textContent='Sons: '+(settings.sound?'ligados':'desligados');saveSettings()}
+function changeFont(direction){settings.font=Math.max(18,Math.min(30,settings.font+(direction*2)));applySettings()}
+function toggleContrast(){settings.contrast=!settings.contrast;applySettings()}
+function toggleTheme(){settings.light=!settings.light;applySettings()}
+function toggleMotion(){settings.reduced=!settings.reduced;applySettings()}
+function toggleSound(){settings.sound=!settings.sound;applySettings();if(settings.sound)beep(660)}
+function resetSettings(){settings=defaultSettings();applySettings()}
+function openSettings(){settingsReturnFocus=document.activeElement;el('settings').classList.remove('hidden');el('settings').querySelector('button')?.focus()}
+function closeSettings(){el('settings').classList.add('hidden');if(settingsReturnFocus && settingsReturnFocus.focus)settingsReturnFocus.focus()}
+function beep(freq=520){if(!settings.sound)return;try{const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;const ctx=new Ctx(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.frequency.value=freq;gain.gain.value=.035;osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+.09);osc.onended=()=>ctx.close()}catch(e){/* O retorno visual e escrito permanece disponível. */}}
+function log(message,type='info'){const p=document.createElement('p');p.className=type;p.textContent='› '+message;el('log').prepend(p)}
+function clearLog(){el('log').replaceChildren();log('Histórico limpo. O progresso e a pontuação foram mantidos.','info')}
+function cable(x1,y1,x2,y2){const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy),ang=Math.atan2(dy,dx)*180/Math.PI;return `<div class="cable" aria-hidden="true" style="left:${x1}%;top:${y1}%;width:${len}%;transform:rotate(${ang}deg)"></div>`}
+function draw(){let out='';pcs.forEach(p=>out+=cable(hub.x,hub.y,p.x,p.y));out+=`<div class="node router-node ${routerFailed?'failed':''}" role="img" aria-label="Roteador, ${routerFailed?'com falha':'funcionando'}" style="left:${hub.x}%;top:${hub.y}%"><div class="device router" aria-hidden="true"></div><div class="node-name">ROTEADOR</div><small>${routerFailed?'SEM SINAL':'PONTO CENTRAL'}</small></div>`;pcs.forEach((p,i)=>{const status=pcFailed[i]?'COM FALHA':delivered.has(i+1)?'DADO RECEBIDO':'AGUARDANDO';out+=`<div class="node ${pcFailed[i]?'failed':''}" role="img" aria-label="Computador ${i+1}, ${status.toLowerCase()}" style="left:${p.x}%;top:${p.y}%"><div class="device" aria-hidden="true"><div class="monitor"></div><div class="base"></div></div><div class="node-name">PC ${i+1}</div><small>${status}</small></div>`});el('network').innerHTML=out}
+function updateStats(){el('score').textContent=score;el('medals').textContent=medals;el('missionStat').textContent=(current+1)+'/5';el('progress').style.width=(delivered.size/5*100)+'%';el('progressBar').setAttribute('aria-valuenow',String(delivered.size));el('taskStatus').textContent=delivered.size+' de 5 computadores receberam dados';draw()}
+function renderMission(){const m=missions[current];el('missionEyebrow').textContent='MISSÃO '+String(current+1).padStart(2,'0')+' • '+m.tag;el('missionTitle').textContent=m.title;el('missionDesc').textContent=m.desc;el('objective').textContent=m.objective;el('hint').textContent=m.hint;el('reflection').innerHTML='<strong>LEMBRE-SE:</strong> '+m.reflection;el('phaseTag').textContent=quizDone[current]?'CONCLUÍDA':'EM ANDAMENTO';el('missionList').innerHTML=missions.map((x,i)=>`<div class="mission-item ${i===current?'active':''} ${quizDone[i]?'done':''}" ${i===current?'aria-current="step"':''}><span class="num">${quizDone[i]?'✓':i+1}</span><span><strong>${x.title}</strong><small>${quizDone[i]?'Missão concluída':i===current?'Missão atual':'Etapa bloqueada'}</small></span></div>`).join('');el('sendButtons').innerHTML=[1,2,3,4,5].map(i=>`<button class="secondary" type="button" onclick="sendOne(${i})" aria-label="Enviar pacote para o computador ${i}">Enviar para PC ${i}</button>`).join('');el('pcChoiceButtons').innerHTML=[1,2,3,4,5].map(i=>`<button type="button" class="secondary" onclick="togglePc(${i})" aria-label="Alternar falha no computador ${i}">PC ${i}</button>`).join('');el('pcChoice').classList.add('hidden');pcPickerOpen=false;el('deduceBtn').classList.toggle('hidden',current!==4);el('quizPanel').classList.add('hidden');el('controlsPanel').classList.remove('hidden');updateStats()}
+function startGame(){el('intro').classList.add('hidden');started=true;renderMission();log('Bem-vindo, técnico! Comece pela missão 1.','good');el('missionTitle').focus?.()}
+function sendOne(i){if(!started)return;if(routerFailed){if(current===2)routerAttempted=true;log('Falha: o roteador está sem funcionar. O pacote não pode seguir.','bad');checkTask();beep(220);return}if(pcFailed[i-1]){log('PC '+i+' não recebeu o pacote porque está com falha.','bad');beep(220);return}const p=pcs[i-1];if(current===1&&pcFailed.some(Boolean))mission2Targets.add(i);if(settings.reduced){delivered.add(i);if(!taskFlags['send'+i]){score+=10;taskFlags['send'+i]=true}log('Pacote chegou ao PC '+i+'.','good');updateStats();checkTask();beep(640);return}const packet=document.createElement('div');packet.className='packet';packet.style.left='50%';packet.style.top='49%';el('network').appendChild(packet);const start=performance.now();function move(now){const k=Math.min((now-start)/650,1);packet.style.left=(50+(p.x-50)*k)+'%';packet.style.top=(49+(p.y-49)*k)+'%';if(k<1)requestAnimationFrame(move);else{packet.remove();delivered.add(i);if(!taskFlags['send'+i]){score+=10;taskFlags['send'+i]=true}log('Pacote chegou ao PC '+i+'.','good');updateStats();checkTask();beep(640)}}requestAnimationFrame(move)}
+function sendAll(){if(!started||batchSending)return;if(routerFailed){if(current===2)routerAttempted=true;log('Envio em grupo cancelado: o roteador está com falha. Nenhum computador recebeu os pacotes.','bad');checkTask();beep(220);return}batchSending=true;const btn=el('sendAllBtn');btn.disabled=true;btn.textContent='📡 ENVIANDO PACOTES…';log('Transmissão em grupo iniciada: o roteador enviará dados aos cinco computadores.','info');[1,2,3,4,5].forEach((i,n)=>window.setTimeout(()=>{sendOne(i);if(i===5)window.setTimeout(()=>{batchSending=false;btn.disabled=false;btn.textContent='📡 ENVIAR PACOTES PARA TODOS OS COMPUTADORES'},settings.reduced?100:850)},n*(settings.reduced?80:220)))}
+function toggleRouter(){routerFailed=!routerFailed;log(routerFailed?'ALERTA: o roteador falhou. A comunicação com todos os PCs foi interrompida.':'Roteador reativado. Teste novamente a transmissão.',routerFailed?'bad':'good');draw();checkTask();beep(routerFailed?220:600)}
+function togglePcPicker(){pcPickerOpen=!pcPickerOpen;el('pcChoice').classList.toggle('hidden',!pcPickerOpen);if(pcPickerOpen)el('pcChoiceButtons').querySelector('button')?.focus()}
+function togglePc(i){pcFailed[i-1]=!pcFailed[i-1];if(current===1)mission2Targets.clear();log(pcFailed[i-1]?'PC '+i+' apresentou falha. Teste o envio para os outros computadores.':'PC '+i+' voltou a funcionar.',pcFailed[i-1]?'bad':'good');draw();checkTask();beep(pcFailed[i-1]?220:600)}
+function repairAll(){routerFailed=false;pcFailed=[false,false,false,false,false];taskFlags.repaired=true;log('Verificação concluída: roteador e computadores estão ativos. Rede reparada.','good');draw();checkTask();beep(700)}
+function confirmDeduction(){taskFlags.deduction=true;log('Investigação concluída. Agora responda ao desafio final.','good');checkTask()}
+function checkTask(){let ok=false;if(current===0)ok=delivered.size>=5;if(current===1)ok=pcFailed.some(Boolean)&&!routerFailed&&[...mission2Targets].filter(i=>!pcFailed[i-1]).length>=2;if(current===2)ok=routerFailed&&routerAttempted;if(current===3)ok=!!taskFlags.repaired&&!routerFailed&&!pcFailed.some(Boolean);if(current===4)ok=!!taskFlags.deduction;if(ok&&!el('quizPanel').classList.contains('hidden'))return;if(ok){el('taskStatus').textContent='Objetivo cumprido! Quiz liberado.';el('phaseTag').textContent='OBJETIVO CUMPRIDO';showQuiz()}}
+function shuffleArray(items){const arr=[...items];for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+function showQuiz(){if(quizDone[current])return;el('quizPanel').classList.remove('hidden');el('quizLabel').textContent='PAUSA PARA PENSAR • QUIZ '+(current+1);const q=quizzes[current];el('quizQuestion').textContent=q.q;el('quizFeedback').textContent='';el('continueBtn').classList.add('hidden');el('quizProgress').textContent='Escolha uma resposta. Não existe limite de tempo.';quizAnswered=false;currentQuizOrder=shuffleArray(q.a.map((_,originalIndex)=>originalIndex));el('quizAnswers').innerHTML=currentQuizOrder.map((originalIndex,displayIndex)=>`<button type="button" onclick="answerQuiz(${displayIndex})">${String.fromCharCode(65+displayIndex)}. ${q.a[originalIndex]}</button>`).join('');el('quizQuestion').focus();el('quizPanel').scrollIntoView({behavior:settings.reduced?'auto':'smooth',block:'nearest'})}
+function answerQuiz(displayIndex){if(quizAnswered)return;const q=quizzes[current],buttons=[...el('quizAnswers').querySelectorAll('button')],selectedOriginalIndex=currentQuizOrder[displayIndex];if(selectedOriginalIndex===q.c){quizAnswered=true;buttons[displayIndex].classList.add('correct');buttons.forEach(b=>b.disabled=true);score+=20;medals++;quizDone[current]=true;el('quizFeedback').textContent='⭐ Muito bem! '+q.why+' +20 pontos e uma medalha!';el('quizProgress').textContent='Resposta correta. Você desbloqueou a próxima etapa.';el('continueBtn').classList.remove('hidden');el('phaseTag').textContent='QUIZ CONCLUÍDO';updateStats();log('Quiz '+(current+1)+' concluído. Medalha conquistada!','good');if(current===4)el('continueBtn').textContent='Ver resultado 🏆';beep(760)}else{buttons[displayIndex].classList.add('wrong');el('quizFeedback').textContent='Ainda não! Observe o resultado do teste e tente outra alternativa. Não há limite de tentativas.';log('Resposta do quiz precisa ser revista.','bad');beep(220)}}
+function continueAfterQuiz(){el('quizPanel').classList.add('hidden');if(current===4){el('finishSummary').textContent='Pontuação final: '+score+' pontos • Medalhas: '+medals+' de 5.';el('finish').classList.remove('hidden');el('finishTitle').focus?.();return}current++;mission2Targets.clear();routerAttempted=false;taskFlags={repaired:false,deduction:false};renderMission();log('Nova missão desbloqueada: '+missions[current].title+'.','good');if(current===1)el('taskStatus').textContent='Escolha um PC para simular a falha e envie pacotes a outros dois.';if(current===2)el('taskStatus').textContent='Desative o roteador e tente enviar um pacote.';if(current===3)el('taskStatus').textContent='Repare os equipamentos para recuperar a comunicação.';if(current===4)el('taskStatus').textContent='Observe o mapa e conclua sua investigação.'}
+
+// Tecla Escape fecha a janela de configurações sem interferir nos demais controles.
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&!el('settings').classList.contains('hidden')){closeSettings();return}
+  if(event.key==='Tab'){
+    const activeDialog=[...document.querySelectorAll('.overlay:not(.hidden)')].pop();
+    if(activeDialog){
+      const focusables=[...activeDialog.querySelectorAll('button:not(:disabled),a[href],input,select,[tabindex]:not([tabindex="-1"])')];
+      if(focusables.length){const first=focusables[0],last=focusables[focusables.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}
+    }
+  }
+});
+applySettings();renderMission();draw();
+window.addEventListener('load',()=>{if(!el('intro').classList.contains('hidden'))el('intro').querySelector('button')?.focus()});
 </script>
-</body></html>
+</body>
+</html>
